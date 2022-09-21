@@ -58,6 +58,7 @@ class OrderLines(RowColumn):
     public_price = models.IntegerField()
     unit_selling_price = models.IntegerField()
     qty = models.IntegerField()
+    wasted_flag = models.CharField(max_length=1,null=True)
     status = models.CharField(max_length=1, choices=status)
     discount_value = models.IntegerField()
     discount_type = models.CharField(max_length=1, choices=discount)
@@ -66,9 +67,7 @@ class OrderLines(RowColumn):
 class InvoiceHeaders(RowColumn):
     invoice_number = models.IntegerField()
     party = models.ForeignKey(Parties, on_delete=models.CASCADE)
-    order_header = models.ForeignKey(OrderHeaders, on_delete=models.CASCADE)
     price_list = models.ForeignKey(PriceListHeaders, on_delete=models.CASCADE)
-    room = models.ForeignKey(Rooms, on_delete=models.CASCADE)
     discount_value = models.IntegerField()
     discount_type = models.CharField(max_length=1, choices=discount)
     total_order = models.ImageField()
@@ -76,6 +75,8 @@ class InvoiceHeaders(RowColumn):
 
 class InvoiceLines(RowColumn):
     header = models.ForeignKey(InvoiceHeaders, on_delete=models.CASCADE)
+    order_header = models.ForeignKey(OrderHeaders, on_delete=models.CASCADE)
+    room = models.ForeignKey(Rooms, on_delete=models.CASCADE)
     item = models.ForeignKey(Items, on_delete=models.CASCADE)
     price_list_line = models.ForeignKey(PriceListLines, on_delete=models.CASCADE)
     public_price = models.IntegerField()
