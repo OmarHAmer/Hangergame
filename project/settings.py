@@ -76,10 +76,10 @@ WSGI_APPLICATION = 'project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'HangerGame', 
-        'USER': 'postgres', 
-        'PASSWORD': 'admin',
-        'HOST': 'localhost', 
+        'NAME': 'hangergame', 
+        'USER': 'hangergame', 
+        'PASSWORD': 'hangergame',
+        'HOST': 'hangergamedb', 
         'PORT': '5432',
     }
 }
