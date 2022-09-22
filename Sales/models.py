@@ -1,15 +1,15 @@
 from django.db import models
 from django.contrib.auth.models import User
-from Inventory.models import Items
+# from Inventory.models import Items
 from Party.models import Parties
 # Create your models here.
 
 
 class RowColumn(models.Model):
     creation_date = models.DateTimeField(auto_now_add=True)
-    created_by = models.IntegerField(User, on_delete=models.CASCADE, blank=False)
+    created_by = models.IntegerField(User, blank=False, null= False)
     Last_update_date = models.DateTimeField(auto_now=True)
-    Last_update_by = models.IntegerField(User, on_delete=models.CASCADE, blank=False)
+    Last_update_by = models.IntegerField(User, blank=False, null= False)
 
     class Meta:
         abstract = True
@@ -20,7 +20,7 @@ class PriceListHeaders(RowColumn):
 
 
 class PriceListLines(RowColumn):
-    item = models.ForeignKey(Items, on_delete=models.CASCADE)
+    item = models.ForeignKey(to='Inventory.Items', on_delete=models.SET_NULL, null=True)
     value = models.IntegerField()
 
 
@@ -53,7 +53,7 @@ class OrderHeaders(RowColumn):
 
 class OrderLines(RowColumn):
     header = models.ForeignKey(OrderHeaders, on_delete=models.CASCADE)
-    item = models.ForeignKey(Items, on_delete=models.CASCADE)
+    item = models.ForeignKey(to='Inventory.Items', on_delete=models.SET_NULL, null=True)
     price_list_line = models.ForeignKey(PriceListLines, on_delete=models.CASCADE)
     public_price = models.IntegerField()
     unit_selling_price = models.IntegerField()
@@ -77,7 +77,7 @@ class InvoiceLines(RowColumn):
     header = models.ForeignKey(InvoiceHeaders, on_delete=models.CASCADE)
     order_header = models.ForeignKey(OrderHeaders, on_delete=models.CASCADE)
     room = models.ForeignKey(Rooms, on_delete=models.CASCADE)
-    item = models.ForeignKey(Items, on_delete=models.CASCADE)
+    item = models.ForeignKey(to='Inventory.Items', on_delete=models.SET_NULL, null=True)
     price_list_line = models.ForeignKey(PriceListLines, on_delete=models.CASCADE)
     public_price = models.IntegerField()
     unit_selling_price = models.IntegerField()

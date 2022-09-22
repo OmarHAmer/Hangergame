@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-*q0_va8lq49i+g#sbpbkimr8bhi-xu@n6epy(@zsrr78#2(ov2
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -37,6 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    #myapp
+    'Inventory',
+    'Party',
+    'Sales',
+    'Purchasing',
 ]
 
 MIDDLEWARE = [
@@ -79,7 +84,7 @@ DATABASES = {
         'NAME': 'hangergame', 
         'USER': 'hangergame', 
         'PASSWORD': 'hangergame',
-        'HOST': 'hangergamedb', 
+        'HOST': '172.17.0.5', 
         'PORT': '5432',
     }
 }
