@@ -1,6 +1,5 @@
 {% extends 'registrationtemplate.html' %}
 {% load static %}
-{{loginform}}
 
 
 {% block Row1 %}
@@ -11,42 +10,44 @@
         <div class="card-body">
 
             <h3 class="text-center m-0">
-                <a href="index.html" class="logo logo-admin"><img src="assets/images/logo.png" height="30" alt="logo"></a>
+                <a href="#" class="logo logo-admin"><img src="{% static 'assets/images/Loginpage.png' %}" height="200" alt="logo"></a>
             </h3>
 
             <div class="p-3">
-                <h4 class="text-muted font-18 m-b-5 text-center">Welcome Back !</h4>
-                <p class="text-muted text-center">Sign in to continue to Lexa.</p>
+                <h4 class="text-muted font-18 m-b-5 text-center">Welcome</h4>
+                <p class="text-muted text-center">Sign in to continue to Hanger Game App</p>
 
-                <form class="form-horizontal m-t-30" action="index.html">
-
+                <form class="form-horizontal m-t-30" action="{% url 'accounts:LoginPage' %}" method="post">{% csrf_token %}
+                    {% for input in loginform %}
                     <div class="form-group">
-                        <label for="username">Username</label>
-                        <input type="text" class="form-control" id="username" placeholder="Enter username">
+                        <label for="{{input.id_for_label }}">{{input.label}}</label>
+                        <input type="{{input.widget_type}}" class="form-control" name="{{ input.html_name }}" id="{{input.id_for_label }}" placeholder="Enter {{ input.html_name }}" required ="{{input.required_css_class }}" {% if input.value is not None %} value="{{ input.value }}" {% endif %}>
                     </div>
-
-                    <div class="form-group">
-                        <label for="userpassword">Password</label>
-                        <input type="password" class="form-control" id="userpassword" placeholder="Enter password">
-                    </div>
-
+                    {% endfor %}
+                    {% if loginform.non_field_errors %}
+                        {% for error in loginform.non_field_errors %}
+                        <div class="errornote alert alert-danger" role="alert">
+                            <strong>Warning!</strong> {{error}}
+                        </div>
+                        {% endfor %}
+                    {% endif %}
                     <div class="form-group row m-t-20">
-                        <div class="col-6">
+                        <!--<div class="col-6">
                             <div class="custom-control custom-checkbox">
                                 <input type="checkbox" class="custom-control-input" id="customControlInline">
                                 <label class="custom-control-label" for="customControlInline">Remember me</label>
                             </div>
-                        </div>
-                        <div class="col-6 text-right">
+                        </div>-->
+                        <div class="col-12 text-right">
                             <button class="btn btn-primary w-md waves-effect waves-light" type="submit">Log In</button>
                         </div>
                     </div>
 
-                    <div class="form-group m-t-10 mb-0 row">
+                    <!--<div class="form-group m-t-10 mb-0 row">
                         <div class="col-12 m-t-20">
                             <a href="pages-recoverpw.html" class="text-muted"><i class="mdi mdi-lock"></i> Forgot your password?</a>
                         </div>
-                    </div>
+                    </div>-->
                 </form>
             </div>
 
@@ -54,8 +55,8 @@
     </div>
 
     <div class="m-t-40 text-center">
-        <p>Don't have an account ? <a href="pages-register.html" class="text-danger"> Signup Now </a> </p>
-        <p>© 2018 - 2019 Lexa. Crafted with <i class="mdi mdi-heart text-primary"></i> by Themesbrand</p>
+        <!--<p>Don't have an account ? <a href="pages-register.html" class="text-danger"> Signup Now </a> </p>-->
+        <p>© 2022 - 2023 IT Lovers with <i class="mdi mdi-heart text-primary"></i> Omar Hesham</p>
     </div>
 
 </div>

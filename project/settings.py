@@ -60,7 +60,7 @@ ROOT_URLCONF = 'project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [ BASE_DIR / 'Templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -85,7 +85,7 @@ DATABASES = {
         'NAME': 'hangergame', 
         'USER': 'hangergame', 
         'PASSWORD': 'hangergame',
-        'HOST': '172.17.0.5', 
+        'HOST': '172.17.0.2', 
         'PORT': '5432',
     }
 }
