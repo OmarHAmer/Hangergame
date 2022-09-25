@@ -41,18 +41,29 @@ def login(request):
         return render(request,'loginpage.html',context)
 
 
-def navbar(request):
-    pass
-    
+def navpage(request,slug):
+    data = NavBar.objects.all()
+    navdata = data.get(slug=slug)
+    bardata = data.filter(parent__isnull=True).order_by('order_by')
+
+    context = {
+        'bardata':bardata,
+        'navdata':navdata
+    }
+
+    return render(request,slug+'.html',context)
 
 
 
 def home(request):
 
-    bardata = NavBar.objects.all()
+    data = NavBar.objects.all()
+    bardata = data.filter(parent__isnull=True).order_by('order_by')
+    childbardata = data.filter(parent__isnull=False).order_by('order_by')
 
     context = {
-        bardata:bardata
+        'bardata':bardata,
+        'childbardata':childbardata
     }
 
     return render(request,'index.html',context)
