@@ -1,0 +1,44 @@
+version: "3.9"   
+
+services:
+  db:
+    image: postgres
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    restart: always
+    ports:
+      - "5433:5433"
+    environment:
+      - POSTGRES_DB=hangergame
+      - POSTGRES_USER=hangergame
+      - POSTGRES_PASSWORD=hangergame
+    container_name: hangergamedb
+  
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+    environment:
+      - POSTGRES_NAME=hangergame
+      - POSTGRES_USER=hangergame
+      - POSTGRES_PASSWORD=hangergame
+    restart: always
+    image: hangergameimage
+    volumes:
+      - .:/hanger/container
+    container_name: hangergameweb
+    depends_on:
+      - db
+  
+  pgadmin:
+    image: dpage/pgadmin4
+    volumes:
+      - ./data/pgadmin:/var/lib/pgadmin
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=omar.hesham.amer91@gmail.com
+      - PGADMIN_DEFAULT_PASSWORD=hangergameadmin
+    ports:
+      - 80:80
+    restart: always
+    container_name: hangergamepgadmin
