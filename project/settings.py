@@ -85,7 +85,7 @@ DATABASES = {
         'NAME': 'hangergame', 
         'USER': 'hangergame', 
         'PASSWORD': 'hangergame',
-        'HOST': '172.17.0.2', 
+        'HOST': 'hangergamedb1', 
         'PORT': '5432',
     }
 }
