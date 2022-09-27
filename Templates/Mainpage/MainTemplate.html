@@ -139,7 +139,7 @@
                             {% for Mlist in bardata %}                           
                                 {% if Mlist.child_list_flag == False %}
                                 <li>
-                                    <a href="{% url 'accounts:navpage' Mlist.slug %}" class="waves-effect">
+                                    <a href="{% url 'accounts:navpage' app=Mlist.app_name slug=Mlist.slug %}" class="waves-effect">
                                         <i class="{{Mlist.icon}}"></i>
                                         <span class="badge badge-primary badge-pill float-right">2</span> 
                                         <span> {{Mlist.title}} </span>
@@ -159,7 +159,7 @@
                                     {% for chlist in childbardata %}
                                         {% if chlist.parent_id == Mlist.id %}
                                                 <li>
-                                                    <a href="{% url 'accounts:navpage' chlist.slug %}">
+                                                    <a href="{% url 'accounts:navpage' app=chlist.app_name slug=chlist.slug %}">
                                                         <i class="{{chlist.icon}}"></i>
                                                         <span> {{chlist.title}} </span>
                                                     </a>

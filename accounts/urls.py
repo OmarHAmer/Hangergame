@@ -7,5 +7,5 @@ app_name = 'accounts'
 urlpatterns = [
     path('',views.login,name='LoginPage'),
     path('Home/',views.home,name='Home'),
-    path('<str:slug>',views.navpage,name='navpage'),
+    path('<str:app>/<str:slug>',views.navpage,name='navpage'),
 ]

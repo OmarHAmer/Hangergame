@@ -28,7 +28,7 @@ def login(request):
             'loginform':loginform
             }
 
-            return render(request,'loginpage.html',context)
+            return render(request,'accounts/loginpage.html',context)
 
     else:
 
@@ -38,20 +38,24 @@ def login(request):
         'loginform':loginform
         }
 
-        return render(request,'loginpage.html',context)
+        return render(request,'accounts/loginpage.html',context)
 
 
-def navpage(request,slug):
+def navpage(request,app,slug):
+
     data = NavBar.objects.all()
-    navdata = data.get(slug=slug)
     bardata = data.filter(parent__isnull=True).order_by('order_by')
+    childbardata = data.filter(parent__isnull=False).order_by('order_by')
 
     context = {
         'bardata':bardata,
-        'navdata':navdata
+        'childbardata':childbardata
     }
 
-    return render(request,slug+'.html',context)
+    if app == 'None' :
+        return render(request,slug+'.html',context)
+    else:
+        return render(request,app+'/'+slug+'.html',context)
 
 
 
@@ -66,4 +70,4 @@ def home(request):
         'childbardata':childbardata
     }
 
-    return render(request,'index.html',context)
+    return render(request,'accounts/index.html',context)
