@@ -23,9 +23,9 @@ class Items(RowColumn):
     description = models.CharField(max_length=400)
     item_type = models.IntegerField(choices=itemtype)
     category = models.ForeignKey(Category,on_delete=models.CASCADE)
-    order_flag = models.CharField(max_length=1)
-    batch_flag = models.CharField(max_length=1)
-    complete_flag = models.CharField(max_length=1)
+    order_flag = models.BooleanField(max_length=1)
+    batch_flag = models.BooleanField(max_length=1)
+    complete_flag = models.BooleanField(max_length=1)
 
 class BatchHeaders(RowColumn):
     code = models.CharField(max_length=10)
