@@ -1,6 +1,105 @@
 {% extends 'Mainpage/MainTemplate.html' %}
+{% load static %}
+
+{% block css %}
+<!-- Plugins css -->
+<link href="{% static 'plugins/select2/css/select2.min.css' %}" rel="stylesheet" type="text/css" />
+{% endblock %}
 
 
 {% block content1 %}
-{{masterform.as_p}}
+<div class="row">
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <h4 class="page-title">Alerts</h4>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="javascript:void(0);">Lexa</a></li>
+                <li class="breadcrumb-item"><a href="javascript:void(0);">UI Elements</a></li>
+                <li class="breadcrumb-item active">Alerts</li>
+            </ol>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card m-b-20">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="m-t-20">
+                            <label class="text-muted">Item {{masterform.code.label}}</label>
+                            <input type="{{masterform.code.widget_type}}" class="form-control" maxlength="{{masterform.code.field.max_length}}" name="{{ masterform.code.html_name }}" id="alloptions" placeholder="Enter {{ masterform.code..html_name }}" required ="{{masterform.code.required_css_class }}" {% if masterform.code.value is not None %} value="{{ masterform.code.value }}" {% endif %}>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="m-t-20">
+                            <label class="text-muted">{{masterform.description.label}}</label>
+                            <input type="{{masterform.description.widget_type}}" class="form-control" maxlength="{{masterform.description.field.max_length}}" name="{{ masterform.description.html_name }}" id="alloptions" placeholder="Enter {{ masterform.description..html_name }}" required ="{{masterform.description.required_css_class }}" {% if masterform.code.value is not None %} value="{{ masterform.description.value }}" {% endif %}>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="m-t-20">
+                            <div class="form-group">
+                                <label class="text-muted">{{masterform.category.label}}</label>
+                                <select class="form-control select2" name="{{ masterform.category.html_name }}">
+                                    <option>Select</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="m-t-20">
+                            <div class="form-group">
+                                <label class="text-muted">{{masterform.item_type.label}}</label>
+                                <select class="form-control select2" name="{{ masterform.item_type.html_name }}">
+                                    <option>Select</option>
+                                    {{masterform.get_item_type_display}}
+                                    {% for key ,value in masterform.get_item_type_display %}
+                                    <option value="{{key}}">{{value}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="m-t-20">
+                            <p>{{masterform.order_flag.label}}</p>
+                            <input type="{{masterform.order_flag.widget_type}}" id="{{ masterform.order_flag.id_for_label }}" switch="primary" checked="{{ masterform.order_flag.value }}">
+                            <label for="{{masterform.order_flag.id_for_label}}" data-on-label="Yes" data-off-label="No"></label>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="m-t-20">
+                            <p>{{masterform.batch_flag.label}}</p>
+                            <input type="{{masterform.batch_flag.widget_type}}" id="{{ masterform.batch_flag.id_for_label }}" switch="primary" checked="{{ masterform.batch_flag.value }}">
+                            <label for="{{masterform.batch_flag.id_for_label}}" data-on-label="Yes" data-off-label="No"></label>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="m-t-20">
+                            <p>{{masterform.complete_flag.label}}</p>
+                            <input type="{{masterform.complete_flag.widget_type}}" id="{{ masterform.complete_flag.id_for_label }}" switch="primary" checked="{{ masterform.complete_flag.value }}">
+                            <label for="{{masterform.complete_flag.id_for_label}}" data-on-label="Yes" data-off-label="No"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+    <!-- Plugins js -->    
+    <script src="{% static 'plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js' %}"></script>
+    <script src="{% static 'plugins/bootstrap-datepicker/js/bootstrap-datepicker.js' %}"></script>
+    <script src="{% static 'plugins/select2/js/select2.min.js' %}"></script>
+    <script src="{% static 'plugins/bootstrap-maxlength/bootstrap-maxlength.min.js' %}"></script>
+    <script src="{% static 'plugins/bootstrap-touchspin/js/jquery.bootstrap-touchspin.min.js' %}"></script>
+    <!-- Plugins Init js -->
+    <script src="{% static 'assets/pages/form-advanced.js' %}"></script>
 {% endblock %}

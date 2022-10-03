@@ -20,7 +20,7 @@ def master_items(request):
         else:
             masterform = FormItems(request.POST)
     else:
-        masterform = FormItems()
+        masterform = FormItems({})
     
     context = {
         'bardata':bardata,
