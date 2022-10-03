@@ -54,10 +54,8 @@
                             <div class="form-group">
                                 <label class="text-muted">{{masterform.item_type.label}}</label>
                                 <select class="form-control select2" name="{{ masterform.item_type.html_name }}">
-                                    <option>Select</option>
-                                    {{masterform.get_item_type_display}}
-                                    {% for key ,value in masterform.get_item_type_display %}
-                                    <option value="{{key}}">{{value}}</option>
+                                    {% for key  in masterform.item_type %}
+                                    <option>{{key}}</option>
                                     {% endfor %}
                                 </select>
                             </div>

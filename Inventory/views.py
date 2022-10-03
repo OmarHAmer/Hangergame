@@ -1,13 +1,13 @@
 from django.shortcuts import render
 from .forms import FormItems
 from accounts.models import NavBar
+from accounts.srp import NavClass
+from .models import Items
 # Create your views here.
 
 def master_items(request):
 
-    data = NavBar.objects.all()
-    bardata = data.filter(parent__isnull=True).order_by('order_by')
-    childbardata = data.filter(parent__isnull=False).order_by('order_by')
+    navdata = NavClass.mainbar()
 
     if request.method == 'POST':
         masterform = FormItems(request.POST)
@@ -22,10 +22,12 @@ def master_items(request):
     else:
         masterform = FormItems({})
     
+    item_type = Items.objects.all()
     context = {
-        'bardata':bardata,
-        'childbardata':childbardata,
-        'masterform':masterform
+        **navdata,
+        'masterform':masterform,
+        'item_type':item_type
+        
     }
 
     return render(request,'Inventory/master-items.html',context)
