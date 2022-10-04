@@ -22,11 +22,9 @@ def master_items(request):
     else:
         masterform = FormItems({})
     
-    item_type = Items.objects.all()
     context = {
         **navdata,
         'masterform':masterform,
-        'item_type':item_type
         
     }
 
