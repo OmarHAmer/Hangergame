@@ -27,7 +27,8 @@ $.fn.numericInputExample = function () {
 			var row = $(this);
 			total += parseFloat(row.children().eq(column).text());
 		});
-		if (column === 1 && total > 5000) {
+		// if (column === 1 && total > 5000) {
+		if((cell.hasClass('is_num') && !$.isNumeric(cell.val())) || (!cell.hasClass('is_num') && $.isNumeric(cell.val()))) {
 			$('.alert').show();
 			return false; // changes can be rejected
 		} else {
@@ -37,7 +38,8 @@ $.fn.numericInputExample = function () {
 	}).on('validate', function (evt, value) {
 		var cell = $(this),
 			column = cell.index();
-		if (column === 0) {
+		// if (column === 0) {
+		if(!(cell.hasClass('is_num'))) {
 			return !!value && value.trim().length > 0;
 		} else {
 			return !isNaN(parseFloat(value)) && isFinite(value);

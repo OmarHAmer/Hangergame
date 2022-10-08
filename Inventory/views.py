@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.urls import reverse
+from django.shortcuts import render,redirect
 from .forms import FormItems
 from accounts.models import NavBar
 from accounts.srp import NavClass
@@ -13,9 +14,12 @@ def master_items(request):
         masterform = FormItems(request.POST)
 
         if masterform.is_valid():
-
+            masterform.cleaned_data
             masterform = masterform.save(commit=False)
+            masterform.created_by = request.user.id
+            masterform.Last_update_by = request.user.id
             masterform.save()
+            return redirect(reverse('Party:displayparties'))
         
         else:
             masterform = FormItems(request.POST)

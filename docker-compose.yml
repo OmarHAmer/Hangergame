@@ -18,7 +18,7 @@ services:
     build: .
     command: python manage.py runserver 0.0.0.0:8000
     ports:
-      - "8001:8000"
+      - "8002:8000"
     environment:
       - POSTGRES_NAME=hangergame
       - POSTGRES_USER=hangergame
@@ -39,6 +39,6 @@ services:
       - PGADMIN_DEFAULT_EMAIL=omar.hesham.alex2016@gmail.com
       - PGADMIN_DEFAULT_PASSWORD=admin
     ports:
-      - 81:80
+      - 82:80
     restart: always
     container_name: hangergamepgadmin1
