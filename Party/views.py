@@ -1,4 +1,3 @@
-from django.db import connection
 from django.urls import reverse
 from django.shortcuts import render,redirect
 from .forms import PartiesForm
@@ -26,7 +25,7 @@ def parties(request):
 
         else:
 
-            print(request.POST)
+            # print(request.POST)
             partiesform = PartiesForm(request.POST)
 
             context = {
