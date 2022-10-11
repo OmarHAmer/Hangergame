@@ -41,12 +41,10 @@
                     <tbody>
                     {% for feild in roomsdata %}
                     <tr>
-                        <td> {{feild.party_number}} </td>
-                        <td> {{feild.party_name}} </td>
-                        <td> {{feild.telephone}} </td>
-                        <td> {{feild.address}} </td>
-                        <td> {{feild.get_party_type_display}} </td>
-                    </tr>
+                        <td> {{feild.room_number}} </td>
+                        <td> {{feild.room_name}} </td>
+                        <td> {{feild.room_size}} </td>
+                        <td><img class="rounded mr-2 mo-mb-2" alt="200x200" width="200" src="{{feild.room_image.url}}" data-holder-rendered="true"></tr>
                     {% endfor %}
                     </tbody>
 

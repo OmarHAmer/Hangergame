@@ -5,13 +5,13 @@ from .models import PriceListHeaders,PriceListLines,Rooms,OrderHeaders,OrderLine
 class FormPriceListHeaders(forms.ModelForm):
     class Meta:
         model = PriceListHeaders
-        fields = '__all__'
+        fields = ['price_name']
 
 
 class FormPriceListLines(forms.ModelForm):
     class Meta:
         model = PriceListLines
-        fields = '__all__'
+        fields = ['item','value']
 
 
 class FormRooms(forms.ModelForm):
@@ -23,13 +23,13 @@ class FormRooms(forms.ModelForm):
 class FormOrderHeaders(forms.ModelForm):
     class Meta:
         model = OrderHeaders
-        fields = '__all__'
+        fields = ['order_number','party','price_list','room','status','discount_value','discount_type','total_order']
 
 
 class FormOrderLines(forms.ModelForm):
     class Meta:
-        model = PriceListHeaders
-        fields = '__all__'
+        model = OrderLines
+        fields = ['item','price_list_line','public_price','unit_selling_price','qty','wasted_flag','discount_value','discount_type']
 
 
 class FormInvoiceHeaders(forms.ModelForm):

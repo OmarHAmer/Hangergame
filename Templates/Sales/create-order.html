@@ -1,1 +1,180 @@
 {% extends 'Mainpage/MainTemplate.html' %}
+{% load static %}
+
+{% block css %}
+<!-- Plugins css -->
+<link href="{% static 'plugins/select2/css/select2.min.css' %}" rel="stylesheet" type="text/css" />
+<!-- X-editable css -->
+<link type="text/css" href="{% static 'plugins/x-editable/css/bootstrap-editable.css' %}" rel="stylesheet">
+{% endblock %}
+
+
+{% block content1 %}
+<div class="row">
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <h4 class="page-title">Create Order</h4>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="javascript:void(0);">Lexa</a></li>
+                <li class="breadcrumb-item"><a href="javascript:void(0);">UI Elements</a></li>
+                <li class="breadcrumb-item active">Alerts</li>
+            </ol>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card m-b-20">
+            <div class="card-body">
+                <form method="post" action="{% url 'Sales:createroom' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <h4 class="mt-0 header-title">Order Header</h4>
+                    <!------ Start Row ------->
+                    <!-- {{formorder}} -->
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="m-t-20">
+                                <label class="text-muted">{{formorder.order_number.label}}</label>
+                                <input type="{{formorder.order_number.widget_type}}" class="form-control" maxlength="{{formorder.order_number.field.max_length}}" name="{{ formorder.order_number.html_name }}" id="alloptions" placeholder="Enter {{ formorder.order_number.label }}" required ="{{formorder.order_number.required_css_class }}" {% if formorder.order_number.value is not None %} value="{{ formorder.order_number.value }}" {% endif %}>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="m-t-20">
+                                <label class="text-muted">{{formorder.party.label}}</label>
+                                <input type="{{formorder.party.widget_type}}" class="form-control" maxlength="{{formorder.party.field.max_length}}" name="{{ formorder.party.html_name }}" id="alloptions" placeholder="Enter {{ formorder.party.label }}" required ="{{formorder.party.required_css_class }}" {% if formorder.party.value is not None %} value="{{ formorder.party.value }}" {% endif %}>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="m-t-20">
+                                <label class="text-muted">{{formorder.status.label}}</label>
+                                <input type="{{formorder.status.widget_type}}" class="form-control" maxlength="{{formorder.status.field.max_length}}" name="{{ formorder.status.html_name }}" id="alloptions" placeholder="Enter {{ formorder.status.label }}" required ="{{formorder.status.required_css_class }}" {% if formorder.status.value is not None %} value="{{ formorder.status.value }}" {% endif %}>
+                            </div>
+                        </div>
+                    </div>
+                    <!------ End Row ------->
+
+                    <!------ Start Row ------->
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="m-t-20">
+                                <label class="text-muted">{{formorder.price_list.label}}</label>
+                                <input type="{{formorder.price_list.widget_type}}" class="form-control" maxlength="{{formorder.price_list.field.max_length}}" name="{{ formorder.price_list.html_name }}" id="alloptions" placeholder="Enter {{ formorder.price_list.label }}" required ="{{formorder.price_list.required_css_class }}" {% if formorder.price_list.value is not None %} value="{{ formorder.price_list.value }}" {% endif %}>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="m-t-20">
+                                <label class="text-muted">{{formorder.room.label}}</label>
+                                <input type="{{formorder.room.widget_type}}" class="form-control" maxlength="{{formorder.room.field.max_length}}" name="{{ formorder.room.html_name }}" id="alloptions" placeholder="Enter {{ formorder.room.label }}" required ="{{formorder.room.required_css_class }}" {% if formorder.room.value is not None %} value="{{ formorder.room.value }}" {% endif %}>
+                            </div>
+                        </div>
+                    </div>
+                    <!------ End Row ------->
+
+                    <!------ Start Row ------->
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="m-t-20">
+                                <label class="text-muted">{{formorder.discount_type.label}}</label>
+                                <input type="{{formorder.discount_type.widget_type}}" class="form-control" maxlength="{{formorder.discount_type.field.max_length}}" name="{{ formorder.discount_type.html_name }}" id="alloptions" placeholder="Enter {{ formorder.discount_type.label }}" required ="{{formorder.discount_type.required_css_class }}" {% if formorder.discount_type.value is not None %} value="{{ formorder.discount_type.value }}" {% endif %}>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="m-t-20">
+                                <label class="text-muted">{{formorder.discount_value.label}}</label>
+                                <input type="{{formorder.discount_value.widget_type}}" class="form-control" maxlength="{{formorder.discount_value.field.max_length}}" name="{{ formorder.discount_value.html_name }}" id="alloptions" placeholder="Enter {{ formorder.discount_value.label }}" required ="{{formorder.discount_value.required_css_class }}" {% if formorder.discount_value.value is not None %} value="{{ formorder.discount_value.value }}" {% endif %}>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="m-t-20">
+                                <label class="text-muted">{{formorder.total_order.label}}</label>
+                                <input type="{{formorder.total_order.widget_type}}" class="form-control" maxlength="{{formorder.total_order.field.max_length}}" name="{{ formorder.total_order.html_name }}" id="alloptions" placeholder="Enter {{ formorder.total_order.label }}" required ="{{formorder.total_order.required_css_class }}" {% if formorder.total_order.value is not None %} value="{{ formorder.total_order.value }}" {% endif %}>
+                            </div>
+                        </div>
+                    </div>
+                    <!------ End Row ------->
+
+                    <!------ Start Row ------->
+                    <div class="row">
+                        <!-- Start col -->
+                        <div class="col-12">
+                            <div class="card m-b-20">
+                                <div class="card-body">
+                                    <!-- Start card-body -->
+                                    <h4 class="mt-0 header-title">Order Lines</h4>
+                                    <p class="text-muted m-b-30"></p>
+    
+                                    <div class="table-responsive">
+                                        <table class="table table-striped mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Product</th>
+                                                    <th>Qty</th>
+                                                    <th>Public Price</th>
+                                                    <th>Discount Type</th>
+                                                    <th>Discount Value</th>
+                                                    <th>Unit Selling Price</th>
+                                                    <th>Wasted</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <a href="#" id="inline-sex" data-type="select" data-pk="1" data-value="" data-title="Select sex">Select Product</a>
+                                                    </td>
+                                                    <td>
+                                                        <a href="#" id="inline-username" data-type="text" data-pk="1" data-title="Enter Price">Value</a>
+                                                    </td>
+                                                    <td>
+                                                        <a href="#" id="inline-username" data-type="text" data-pk="1" data-title="Enter Price">Value</a>
+                                                    </td>
+                                                    <td>
+                                                        <a href="#" id="inline-username" data-type="text" data-pk="1" data-title="Enter Price">Value</a>
+                                                    </td>
+                                                    <td>
+                                                        <a href="#" id="inline-username" data-type="text" data-pk="1" data-title="Enter Price">Value</a>
+                                                    </td>
+                                                    <td>
+                                                        <a href="#" id="inline-username" data-type="text" data-pk="1" data-title="Enter Price">Value</a>
+                                                    </td>
+                                                    <td>
+                                                        <a href="#" id="inline-username" data-type="text" data-pk="1" data-title="Enter Price">Value</a>
+                                                    </td>
+                                                </tr>    
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- end card-body -->
+                                </div>
+                            </div>
+                        </div> 
+                        <!-- end col -->
+                    </div> 
+                    <!-- end row -->   
+
+                    <div>
+                        <button type="submit" class="btn btn-outline-primary waves-effect waves-light">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+    <!-- Plugins js -->    
+    <script src="{% static 'plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js' %}"></script>
+    <script src="{% static 'plugins/bootstrap-datepicker/js/bootstrap-datepicker.js' %}"></script>
+    <script src="{% static 'plugins/select2/js/select2.min.js' %}"></script>
+    <script src="{% static 'plugins/bootstrap-maxlength/bootstrap-maxlength.min.js' %}"></script>
+    <script src="{% static 'plugins/bootstrap-filestyle/js/bootstrap-filestyle.min.js' %}"></script>
+    <script src="{% static 'plugins/bootstrap-touchspin/js/jquery.bootstrap-touchspin.min.js' %}"></script>
+    <!-- Plugins Init js -->
+    <script src="{% static 'assets/pages/form-advanced.js' %}"></script>
+
+    <!-- XEditable Plugin -->
+    <script src="{% static 'plugins/moment/moment.js' %}"></script>
+    <script src="{% static 'plugins/x-editable/js/bootstrap-editable.min.js' %}"></script>
+    <script src="{% static 'assets/pages/xeditable.js' %}"></script>
+
+{% endblock %}
