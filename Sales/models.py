@@ -19,8 +19,12 @@ class RowColumn(models.Model):
 class PriceListHeaders(RowColumn):
     price_name = models.CharField(max_length=200)
 
+    def __str__(self) -> str:
+        return self.price_name
+
 
 class PriceListLines(RowColumn):
+    header = models.ForeignKey(to='Sales.PriceListHeaders', on_delete=models.CASCADE)
     item = models.ForeignKey(to='Inventory.Items', on_delete=models.SET_NULL, null=True)
     value = models.IntegerField()
 
@@ -36,6 +40,8 @@ class Rooms(RowColumn):
     room_size = models.IntegerField()
     room_image = models.ImageField(upload_to=upload_image)
 
+    def __str__(self) -> str:
+        return self.room_name
 
 discount = ((1, 'percentage'), (2, 'Amount'))
 status = ((1, 'Entered'), (2, 'Booked'), (3, 'Canceled'), (4, 'Complete'))
@@ -46,11 +52,13 @@ class OrderHeaders(RowColumn):
     party = models.ForeignKey(Parties, on_delete=models.CASCADE)
     price_list = models.ForeignKey(PriceListHeaders, on_delete=models.CASCADE)
     room = models.ForeignKey(Rooms, on_delete=models.CASCADE)
-    status = models.CharField(max_length=1, choices=status)
+    status = models.IntegerField(choices=status)
     discount_value = models.IntegerField()
-    discount_type = models.CharField(max_length=1, choices=discount)
-    total_order = models.ImageField()
+    discount_type = models.IntegerField(choices=discount)
+    total_order = models.IntegerField()
 
+    def __str__(self) -> str:
+        return self.order_number
 
 class OrderLines(RowColumn):
     header = models.ForeignKey(OrderHeaders, on_delete=models.CASCADE)
@@ -59,10 +67,10 @@ class OrderLines(RowColumn):
     public_price = models.IntegerField()
     unit_selling_price = models.IntegerField()
     qty = models.IntegerField()
-    wasted_flag = models.CharField(max_length=1,null=True)
-    status = models.CharField(max_length=1, choices=status)
+    wasted_flag = models.BooleanField()
+    status = models.IntegerField(choices=status)
     discount_value = models.IntegerField()
-    discount_type = models.CharField(max_length=1, choices=discount)
+    discount_type = models.IntegerField(choices=discount)
 
 
 class InvoiceHeaders(RowColumn):
@@ -70,9 +78,11 @@ class InvoiceHeaders(RowColumn):
     party = models.ForeignKey(Parties, on_delete=models.CASCADE)
     price_list = models.ForeignKey(PriceListHeaders, on_delete=models.CASCADE)
     discount_value = models.IntegerField()
-    discount_type = models.CharField(max_length=1, choices=discount)
-    total_order = models.ImageField()
+    discount_type = models.IntegerField(choices=discount)
+    total_order = models.IntegerField()
 
+    def __str__(self) -> str:
+        return self.invoice_number
 
 class InvoiceLines(RowColumn):
     header = models.ForeignKey(InvoiceHeaders, on_delete=models.CASCADE)
@@ -84,4 +94,4 @@ class InvoiceLines(RowColumn):
     unit_selling_price = models.IntegerField()
     qty = models.IntegerField()
     discount_value = models.IntegerField()
-    discount_type = models.CharField(max_length=1, choices=discount)
+    discount_type = models.IntegerField(choices=discount)

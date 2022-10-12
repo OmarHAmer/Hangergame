@@ -24,3 +24,6 @@ class Parties(RowColumn):
     telephone = models.CharField(max_length=12)
     address = models.CharField(max_length=400)
     party_type = models.IntegerField( choices=PartyType)
+
+    def __str__(self) -> str:
+        return self.party_name + '  Tel: ' + self.telephone
