@@ -15,7 +15,11 @@ class RowColumn(models.Model):
 
 class Category(RowColumn):
     name = models.CharField(max_length=400)
-    
+
+    def __str__(self) -> str:
+        return self.name
+
+
 itemtype = ((1,'Row Material'),(2,'Finished Goods'),(3,'Game'))
 
 class Items(RowColumn):
@@ -26,6 +30,10 @@ class Items(RowColumn):
     order_flag = models.BooleanField(max_length=1)
     batch_flag = models.BooleanField(max_length=1)
     complete_flag = models.BooleanField(max_length=1)
+
+    def __str__(self) -> str:
+        return self.description
+
 
 class BatchHeaders(RowColumn):
     code = models.CharField(max_length=10)

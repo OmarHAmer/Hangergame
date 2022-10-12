@@ -40,14 +40,26 @@
                         </div>
                         <div class="col-lg-4">
                             <div class="m-t-20">
-                                <label class="text-muted">{{formorder.party.label}}</label>
-                                <input type="{{formorder.party.widget_type}}" class="form-control" maxlength="{{formorder.party.field.max_length}}" name="{{ formorder.party.html_name }}" id="alloptions" placeholder="Enter {{ formorder.party.label }}" required ="{{formorder.party.required_css_class }}" {% if formorder.party.value is not None %} value="{{ formorder.party.value }}" {% endif %}>
+                                <div class="form-group">
+                                    <label class="text-muted">{{formorder.party.label}}</label>
+                                    <select class="form-control select2" name="{{ formorder.party.html_name }}">
+                                        {% for key  in formorder.party %}
+                                        {{key}}
+                                        {% endfor %}
+                                    </select>
+                                </div>
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="m-t-20">
-                                <label class="text-muted">{{formorder.status.label}}</label>
-                                <input type="{{formorder.status.widget_type}}" class="form-control" maxlength="{{formorder.status.field.max_length}}" name="{{ formorder.status.html_name }}" id="alloptions" placeholder="Enter {{ formorder.status.label }}" required ="{{formorder.status.required_css_class }}" {% if formorder.status.value is not None %} value="{{ formorder.status.value }}" {% endif %}>
+                                <div class="form-group">
+                                    <label class="text-muted">{{formorder.status.label}}</label>
+                                    <select class="form-control select2" name="{{ formorder.status.html_name }}">
+                                        {% for key  in formorder.status %}
+                                        {{key}}
+                                        {% endfor %}
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -57,14 +69,26 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="m-t-20">
-                                <label class="text-muted">{{formorder.price_list.label}}</label>
-                                <input type="{{formorder.price_list.widget_type}}" class="form-control" maxlength="{{formorder.price_list.field.max_length}}" name="{{ formorder.price_list.html_name }}" id="alloptions" placeholder="Enter {{ formorder.price_list.label }}" required ="{{formorder.price_list.required_css_class }}" {% if formorder.price_list.value is not None %} value="{{ formorder.price_list.value }}" {% endif %}>
+                                <div class="form-group">
+                                    <label class="text-muted">{{formorder.price_list.label}}</label>
+                                    <select class="form-control select2" name="{{ formorder.price_list.html_name }}">
+                                        {% for key  in formorder.price_list %}
+                                        {{key}}
+                                        {% endfor %}
+                                    </select>
+                                </div>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="m-t-20">
-                                <label class="text-muted">{{formorder.room.label}}</label>
-                                <input type="{{formorder.room.widget_type}}" class="form-control" maxlength="{{formorder.room.field.max_length}}" name="{{ formorder.room.html_name }}" id="alloptions" placeholder="Enter {{ formorder.room.label }}" required ="{{formorder.room.required_css_class }}" {% if formorder.room.value is not None %} value="{{ formorder.room.value }}" {% endif %}>
+                                <div class="form-group">
+                                    <label class="text-muted">{{formorder.room.label}}</label>
+                                    <select class="form-control select2" name="{{ formorder.room.html_name }}">
+                                        {% for key  in formorder.room %}
+                                        {{key}}
+                                        {% endfor %}
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -74,8 +98,14 @@
                     <div class="row">
                         <div class="col-lg-4">
                             <div class="m-t-20">
-                                <label class="text-muted">{{formorder.discount_type.label}}</label>
-                                <input type="{{formorder.discount_type.widget_type}}" class="form-control" maxlength="{{formorder.discount_type.field.max_length}}" name="{{ formorder.discount_type.html_name }}" id="alloptions" placeholder="Enter {{ formorder.discount_type.label }}" required ="{{formorder.discount_type.required_css_class }}" {% if formorder.discount_type.value is not None %} value="{{ formorder.discount_type.value }}" {% endif %}>
+                                <div class="form-group">
+                                    <label class="text-muted">{{formorder.discount_type.label}}</label>
+                                    <select class="form-control select2" name="{{ formorder.discount_type.html_name }}">
+                                        {% for key  in formorder.discount_type %}
+                                        {{key}}
+                                        {% endfor %}
+                                    </select>
+                                </div>
                             </div>
                         </div>
                         <div class="col-lg-4">
