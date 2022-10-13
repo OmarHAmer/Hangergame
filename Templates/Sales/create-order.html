@@ -42,11 +42,13 @@
                             <div class="m-t-20">
                                 <div class="form-group">
                                     <label class="text-muted">{{formorder.party.label}}</label>
-                                    <select class="form-control select2" name="{{ formorder.party.html_name }}">
-                                        {% for key  in formorder.party %}
-                                        {{key}}
-                                        {% endfor %}
-                                    </select>
+                                    <span class="input-group-btn input-group-append">
+                                        <select class="form-control select2" name="{{ formorder.party.html_name }}">
+                                            {% for key  in formorder.party %}
+                                            {{key}}
+                                            {% endfor %}
+                                        </select>
+                                    <button class="btn btn-primary bootstrap-touchspin-up" type="button" id="new-ajax-alert">+</button>
                                 </div>
                             </div>
                         </div>
@@ -55,9 +57,9 @@
                                 <div class="form-group">
                                     <label class="text-muted">{{formorder.status.label}}</label>
                                     <select class="form-control select2" name="{{ formorder.status.html_name }}">
-                                        {% for key  in formorder.status %}
-                                        {{key}}
-                                        {% endfor %}
+                                            {% for key  in formorder.status %}
+                                            {{key}}
+                                            {% endfor %}
                                     </select>
                                 </div>
                             </div>
@@ -71,11 +73,14 @@
                             <div class="m-t-20">
                                 <div class="form-group">
                                     <label class="text-muted">{{formorder.price_list.label}}</label>
-                                    <select class="form-control select2" name="{{ formorder.price_list.html_name }}">
-                                        {% for key  in formorder.price_list %}
-                                        {{key}}
-                                        {% endfor %}
-                                    </select>
+                                    <span class="input-group-btn input-group-append">
+                                        <select class="form-control select2" name="{{ formorder.price_list.html_name }}">
+                                            {% for key  in formorder.price_list %}
+                                            {{key}}
+                                            {% endfor %}
+                                        </select>
+                                        <button class="btn btn-primary bootstrap-touchspin-up" type="button" id="new-ajax-alert">+</button>
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -83,11 +88,14 @@
                             <div class="m-t-20">
                                 <div class="form-group">
                                     <label class="text-muted">{{formorder.room.label}}</label>
-                                    <select class="form-control select2" name="{{ formorder.room.html_name }}">
-                                        {% for key  in formorder.room %}
-                                        {{key}}
-                                        {% endfor %}
-                                    </select>
+                                    <span class="input-group-btn input-group-append">
+                                        <select class="form-control select2" name="{{ formorder.room.html_name }}">
+                                            {% for key  in formorder.room %}
+                                            {{key}}
+                                            {% endfor %}
+                                        </select>
+                                        <button class="btn btn-primary bootstrap-touchspin-up" type="button" id="new-ajax-alert">+</button>
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -144,6 +152,16 @@
                                                     <th>Discount Value</th>
                                                     <th>Unit Selling Price</th>
                                                     <th>Wasted</th>
+                                                    <th>
+                                                        <span class="input-group-btn input-group-append">
+                                                        <button class="btn btn-success btn-sm waves-effect waves-light bootstrap-touchspin-up" type="button" id="add-row">
+                                                            <i class="mdi mdi-plus"></i>
+                                                        </button>
+                                                        <button class="btn btn-danger btn-sm waves-effect waves-light bootstrap-touchspin-up" type="button" id="delete-row">
+                                                            <i class="mdi mdi-close"></i>
+                                                        </button>
+                                                        </span>
+                                                    </th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -168,6 +186,9 @@
                                                     </td>
                                                     <td>
                                                         <a href="#" id="inline-username" data-type="text" data-pk="1" data-title="Enter Price">Value</a>
+                                                    </td>
+                                                    <td>
+                                                        
                                                     </td>
                                                 </tr>    
                                             </tbody>
@@ -207,4 +228,34 @@
     <script src="{% static 'plugins/x-editable/js/bootstrap-editable.min.js' %}"></script>
     <script src="{% static 'assets/pages/xeditable.js' %}"></script>
 
+    <script>
+         $(document).ready(function () {
+            var lineNo = 1;
+            $("#add-row").click(function () {
+                
+                add_row = "<tr id='tr"+ lineNo +"'>";
+                add_row += '<td></td>';
+                add_row += '<td></td>';
+                add_row += '<td></td>';
+                add_row += '<td></td>';
+                add_row += '<td></td>';
+                add_row += '<td></td>';
+                add_row += '<td></td>';
+                add_row += "</tr>";
+
+                tableBody = $("table tbody");
+                tableBody.append(add_row);
+                lineNo++;
+            });
+
+            // Find and remove selected table rows
+            $("#delete-row").click(function(){
+                lineNo--;
+                $('#tr'+lineNo).remove();
+                
+            });
+
+        }); 
+
+    </script>
 {% endblock %}

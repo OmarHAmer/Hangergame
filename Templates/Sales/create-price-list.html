@@ -56,16 +56,28 @@
                                                 <tr>
                                                     <th style="width: 50%;">Product</th>
                                                     <th>Value</th>
+                                                    <th>
+                                                        <span class="input-group-btn input-group-append">
+                                                        <button class="btn btn-success btn-sm waves-effect waves-light bootstrap-touchspin-up" type="button" id="add-row">
+                                                            <i class="mdi mdi-plus"></i>
+                                                        </button>
+                                                        <button class="btn btn-danger btn-sm waves-effect waves-light bootstrap-touchspin-up" type="button" id="delete-row">
+                                                            <i class="mdi mdi-close"></i>
+                                                        </button>
+                                                        </span>
+                                                    </th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr>
                                                     <td>
-                                                        <a href="#" id="inline-sex" data-type="select" data-pk="1" data-value="" data-title="Select sex">Select Product</a>
+                                                        <a href="#" id="inline-sel2" data-type="select" data-pk="1" data-value="" data-title="Select sex">Select Product</a>
                                                     </td>
                                                     <td>
                                                         <a href="#" id="inline-username" data-type="text" data-pk="1" data-title="Enter Price">Value</a>
                                                     </td>
+                                                    <td>
+                                                    </td>                                                
                                                 </tr>    
                                             </tbody>
                                         </table>
@@ -89,6 +101,7 @@
 {% endblock %}
 
 {% block js %}
+
     <!-- Plugins js -->    
     <script src="{% static 'plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js' %}"></script>
     <script src="{% static 'plugins/bootstrap-datepicker/js/bootstrap-datepicker.js' %}"></script>
@@ -99,9 +112,67 @@
     <!-- Plugins Init js -->
     <script src="{% static 'assets/pages/form-advanced.js' %}"></script>
 
+
     <!-- XEditable Plugin -->
     <script src="{% static 'plugins/moment/moment.js' %}"></script>
     <script src="{% static 'plugins/x-editable/js/bootstrap-editable.min.js' %}"></script>
     <script src="{% static 'assets/pages/xeditable.js' %}"></script>
+    <script>
+
+        
+        $(document).ready(function () {
+            var lineNo = 1;
+            $("#add-row").click(function () {
+                
+                add_row = "<tr id='tr"+ lineNo +"'>";
+                add_row += '<td> \
+                            <a href="#" id="inline-sel2" data-type="select" data-pk="1" data-value="" data-title="Select sex">Select Product</a> \
+                            </td>';
+
+                add_row += '<td> \
+                            <a href="#" id="inline-username" data-type="text" data-pk="1" data-title="Enter Price">Value</a> \
+                            </td>';
+                add_row += '<td></td>';
+                add_row += "</tr>";
+
+                tableBody = $("table tbody");
+                tableBody.append(add_row);
+                lineNo++;
+            });
+
+            // Find and remove selected table rows
+            $("#delete-row").click(function(){
+                lineNo--;
+                $('#tr'+lineNo).remove();
+                
+            });
+
+        }); 
+
+        $('#inline-sel2').editable({
+        prepend: "not selected",
+        mode: 'inline',
+        inputclass: 'form-control select2',
+        source: [
+            {value: 1, text: 'Male'},
+            {value: 2, text: 'Female'}
+        ],
+        validate: function (value) {
+            if ($.trim(value) == '') return 'This field is required';
+        },
+        display: function (value, sourceData) {
+            var colors = {"": "#98a6ad", 1: "#5fbeaa", 2: "#5d9cec"},
+                elem = $.grep(sourceData, function (o) {
+                    return o.value == value;
+                });
+
+            if (elem.length) {
+                $(this).text(elem[0].text).css("color", colors[value]);
+            } else {
+                $(this).empty();
+            }
+        }
+    });
+    </script>
 
 {% endblock %}
