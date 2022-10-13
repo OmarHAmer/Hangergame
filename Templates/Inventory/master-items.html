@@ -50,7 +50,7 @@
                                 <select class="form-control select2" name="{{ masterform.category.html_name }}">
                                     <option>Select</option>
                                 </select>
-                                <button class="btn btn-primary bootstrap-touchspin-up" type="button" id="ajax-alert">+</button></span>
+                                <button class="btn btn-primary bootstrap-touchspin-up" type="button" id="new-ajax-alert">+</button></span>
                             </div>
                         </div>
                     </div>
@@ -113,4 +113,53 @@
     <script src="{% static 'plugins/sweet-alert2/sweetalert2.min.js' %}"></script>
     <script src="{% static 'assets/pages/sweet-alert.init.js' %}"></script>
     
+    <script>
+              // new ajax alert
+              $('#new-ajax-alert').click(function () {
+            Swal.fire({
+                title: 'Enter Category Name',
+                input: 'text',
+                showCancelButton: true,
+                confirmButtonText: 'Submit',
+                showLoaderOnConfirm: true,
+                confirmButtonColor: "#58db83",
+                cancelButtonColor: "#ec536c",
+                preConfirm: function (catg) {
+                    return new Promise(function (resolve, reject) {
+                        setTimeout(function () {
+                            if (!catg.length) {
+                                reject('Category name can\'t be empty.')
+                            } else {
+                                resolve()
+                            }
+                        }, 2000)
+                    })
+                },
+                allowOutsideClick: true
+            }).then(function (result) {
+                if (result.value) {
+                    $.post( "test.php", { catg_name: result.value})
+                    .done(function( data ) {
+                        // alert( "Data Loaded: " + data );
+                        Swal.fire({
+                            title: 'Inserted!',
+                            text: 'New category has been inserted.',
+                            type: 'success',
+                            html: 'Submitted category: ' + result.value
+                        })
+                    });
+                  } else if (
+                    // Read more about handling dismissals
+                    result.dismiss === Swal.DismissReason.cancel
+                  ) {
+                    // Swal.fire({
+                    //   title: 'Cancelled',
+                    // //   text: 'Your imaginary file is safe :)',
+                    //   type: 'error'
+                    // })
+                  }
+            })
+            
+        });
+    </script>
 {% endblock %}
