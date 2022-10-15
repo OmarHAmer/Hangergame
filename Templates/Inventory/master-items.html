@@ -27,72 +27,77 @@
     <div class="col-lg-12">
         <div class="card m-b-20">
             <div class="card-body">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="m-t-20">
-                            <label class="text-muted">Item {{masterform.code.label}}</label>
-                            <input type="{{masterform.code.widget_type}}" class="form-control" maxlength="{{masterform.code.field.max_length}}" name="{{ masterform.code.html_name }}" id="alloptions" placeholder="Enter {{ masterform.code.label }}" required ="{{masterform.code.required_css_class }}" {% if masterform.code.value is not None %} value="{{ masterform.code.value }}" {% endif %}>
+                <form method="post" action="{% url 'Inventory:master_items' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="m-t-20">
+                                <label class="text-muted">Item {{masterform.code.label}}</label>
+                                <input type="{{masterform.code.widget_type}}" class="form-control" maxlength="{{masterform.code.field.max_length}}" name="{{ masterform.code.html_name }}" id="alloptions" placeholder="Enter {{ masterform.code.label }}" required ="{{masterform.code.required_css_class }}" {% if masterform.code.value is not None %} value="{{ masterform.code.value }}" {% endif %}>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="m-t-20">
-                            <label class="text-muted">{{masterform.description.label}}</label>
-                            <input type="{{masterform.description.widget_type}}" class="form-control" maxlength="{{masterform.description.field.max_length}}" name="{{ masterform.description.html_name }}" id="alloptions" placeholder="Enter {{ masterform.description.label }}" required ="{{masterform.description.required_css_class }}" {% if masterform.code.value is not None %} value="{{ masterform.description.value }}" {% endif %}>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="m-t-20">
-                            <div class="form-group">
-                                <label class="text-muted">{{masterform.category.label}}</label>
-                                <span class="input-group-btn input-group-append">
-                                <select class="form-control select2" name="{{ masterform.category.html_name }}">
-                                    <option>Select</option>
-                                </select>
-                                <button class="btn btn-primary bootstrap-touchspin-up" type="button" id="new-ajax-alert">+</button></span>
+                        <div class="col-lg-6">
+                            <div class="m-t-20">
+                                <label class="text-muted">{{masterform.description.label}}</label>
+                                <input type="{{masterform.description.widget_type}}" class="form-control" maxlength="{{masterform.description.field.max_length}}" name="{{ masterform.description.html_name }}" id="alloptions" placeholder="Enter {{ masterform.description.label }}" required ="{{masterform.description.required_css_class }}" {% if masterform.code.value is not None %} value="{{ masterform.description.value }}" {% endif %}>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-6">
-                        <div class="m-t-20">
-                            <div class="form-group">
-                                <label class="text-muted">{{masterform.item_type.label}}</label>
-                                <select class="form-control select2" name="{{ masterform.item_type.html_name }}">
-                                    {% for key  in masterform.item_type %}
-                                    {{key}}
-                                    {% endfor %}
-                                </select>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="m-t-20">
+                                <div class="form-group">
+                                    <label class="text-muted">{{masterform.category.label}}</label>
+                                    <span class="input-group-btn input-group-append">
+                                    <select class="form-control select2" id="{{ masterform.category.id_for_label }}" name="{{ masterform.category.html_name }}">
+                                        {% for key  in masterform.category %}
+                                        {{key}}
+                                        {% endfor %}
+                                    </select>
+                                    <button class="btn btn-primary bootstrap-touchspin-up" type="button" id="new-ajax-alert">+</button></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="m-t-20">
+                                <div class="form-group">
+                                    <label class="text-muted">{{masterform.item_type.label}}</label>
+                                    <select class="form-control select2" name="{{ masterform.item_type.html_name }}">
+                                        {% for key  in masterform.item_type %}
+                                        {{key}}
+                                        {% endfor %}
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-4">
-                        <div class="m-t-20">
-                            <p>{{masterform.order_flag.label}}</p>
-                            <input type="{{masterform.order_flag.widget_type}}" id="{{ masterform.order_flag.id_for_label }}" switch="primary" checked="{{ masterform.order_flag.value }}">
-                            <label for="{{masterform.order_flag.id_for_label}}" data-on-label="Yes" data-off-label="No"></label>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="m-t-20">
+                                <p>{{masterform.order_flag.label}}</p>
+                                <input type="{{masterform.order_flag.widget_type}}" id="{{ masterform.order_flag.id_for_label }}" name="{{ masterform.order_flag.html_name }}" switch="primary" {% if masterform.order_flag.value == True %} checked {% endif %}>
+                                <label for="{{masterform.order_flag.id_for_label}}" data-on-label="Yes" data-off-label="No"></label>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="m-t-20">
+                                <p>{{masterform.batch_flag.label}}</p>
+                                <input type="{{masterform.batch_flag.widget_type}}" id="{{ masterform.batch_flag.id_for_label }}" name="{{ masterform.batch_flag.html_name }}"switch="primary" checked="{{ masterform.batch_flag.value }}">
+                                <label for="{{masterform.batch_flag.id_for_label}}" data-on-label="Yes" data-off-label="No"></label>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="m-t-20">
+                                <p>{{masterform.complete_flag.label}}</p>
+                                <input type="{{masterform.complete_flag.widget_type}}" id="{{ masterform.complete_flag.id_for_label }}" name="{{ masterform.complete_flag.html_name }}" switch="primary" checked="{{ masterform.complete_flag.value }}">
+                                <label for="{{masterform.complete_flag.id_for_label}}" data-on-label="Yes" data-off-label="No"></label>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-lg-4">
-                        <div class="m-t-20">
-                            <p>{{masterform.batch_flag.label}}</p>
-                            <input type="{{masterform.batch_flag.widget_type}}" id="{{ masterform.batch_flag.id_for_label }}" switch="primary" checked="{{ masterform.batch_flag.value }}">
-                            <label for="{{masterform.batch_flag.id_for_label}}" data-on-label="Yes" data-off-label="No"></label>
-                        </div>
+                    <div>
+                        <button type="submit" class="btn btn-outline-primary waves-effect waves-light">Save</button>
                     </div>
-                    <div class="col-lg-4">
-                        <div class="m-t-20">
-                            <p>{{masterform.complete_flag.label}}</p>
-                            <input type="{{masterform.complete_flag.widget_type}}" id="{{ masterform.complete_flag.id_for_label }}" switch="primary" checked="{{ masterform.complete_flag.value }}">
-                            <label for="{{masterform.complete_flag.id_for_label}}" data-on-label="Yes" data-off-label="No"></label>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <button type="submit" class="btn btn-outline-primary waves-effect waves-light">Save</button>
-                </div>
+                </form>
             </div>
         </div>
     </div>
@@ -138,7 +143,7 @@
                 allowOutsideClick: true
             }).then(function (result) {
                 if (result.value) {
-                    $.post( "test.php", { catg_name: result.value})
+                    $.post( "{% url 'Inventory:creatcatfromitems' %}", { name: result.value ,csrfmiddlewaretoken: '{{ csrf_token }}' })
                     .done(function( data ) {
                         // alert( "Data Loaded: " + data );
                         Swal.fire({
@@ -147,6 +152,14 @@
                             type: 'success',
                             html: 'Submitted category: ' + result.value
                         })
+                        console.log(data);
+                        dataid = data.substring(0,data.indexOf(':'));
+                        dataname  = data.substring(data.indexOf(':')+1);
+                        // console.log(dataname);
+                        // console.log(dataid);
+                        var option = new Option(dataname, dataid, true, true);
+                        $("#{{ masterform.category.id_for_label }}").append(option).trigger('change');
+
                     });
                   } else if (
                     // Read more about handling dismissals
