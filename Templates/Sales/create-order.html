@@ -43,12 +43,12 @@
                                 <div class="form-group">
                                     <label class="text-muted">{{formorder.party.label}}</label>
                                     <span class="input-group-btn input-group-append">
-                                        <select class="form-control select2" name="{{ formorder.party.html_name }}">
+                                        <select class="form-control select2 ajax{{ formorder.party.html_name }}" name="{{ formorder.party.html_name }}">
                                             {% for key  in formorder.party %}
                                             {{key}}
                                             {% endfor %}
                                         </select>
-                                    <button class="btn btn-primary bootstrap-touchspin-up" type="button" id="new-ajax-alert">+</button>
+                                    <button class="btn btn-primary bootstrap-touchspin-up" type="button" data-toggle="modal" data-target=".bs-party-modal-center">+</button>
                                 </div>
                             </div>
                         </div>
@@ -79,7 +79,7 @@
                                             {{key}}
                                             {% endfor %}
                                         </select>
-                                        <button class="btn btn-primary bootstrap-touchspin-up" type="button" id="new-ajax-alert">+</button>
+                                        <button class="btn btn-primary bootstrap-touchspin-up" type="button" data-toggle="modal" data-target=".bs-price-modal-center">+</button>
                                     </span>
                                 </div>
                             </div>
@@ -89,12 +89,12 @@
                                 <div class="form-group">
                                     <label class="text-muted">{{formorder.room.label}}</label>
                                     <span class="input-group-btn input-group-append">
-                                        <select class="form-control select2" name="{{ formorder.room.html_name }}">
+                                        <select class="form-control select2 ajax{{ formorder.room.html_name }}" name="{{ formorder.room.html_name }}">
                                             {% for key  in formorder.room %}
                                             {{key}}
                                             {% endfor %}
                                         </select>
-                                        <button class="btn btn-primary bootstrap-touchspin-up" type="button" id="new-ajax-alert">+</button>
+                                        <button class="btn btn-primary bootstrap-touchspin-up" type="button" data-toggle="modal" data-target=".bs-room-modal-center">+</button>
                                     </span>
                                 </div>
                             </div>
@@ -212,6 +212,198 @@
 </div>
 {% endblock %}
 
+{% block content2 %}
+<div class="modal fade bs-party-modal-center" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title mt-0">Create New Customer</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="m-t-20">
+                                <label class="text-muted">{{partiesform.party_number.label}}</label>
+                                <input type="{{partiesform.party_number.widget_type}}" class="form-control {{ partiesform.party_number.html_name }}" maxlength="{{partiesform.party_number.field.max_length}}" name="{{ partiesform.party_number.html_name }}" id="alloptions" placeholder="Enter {{ partiesform.party_number.label }}" required ="{{partiesform.party_number.required_css_class }}" {% if partiesform.party_number.value is not None %} value="{{ partiesform.party_number.value }}" {% endif %}>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="m-t-20">
+                                <label class="text-muted">{{partiesform.party_name.label}}</label>
+                                <input type="{{partiesform.party_name.widget_type}}" class="form-control {{ partiesform.party_name.html_name }}" maxlength="{{partiesform.party_name.field.max_length}}" name="{{ partiesform.party_name.html_name }}" id="alloptions" placeholder="Enter {{ partiesform.party_name.label }}" required ="{{partiesform.party_name.required_css_class }}" {% if partiesform.party_number.value is not None %} value="{{ partiesform.party_name.value }}" {% endif %}>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="m-t-20">
+                                <label class="text-muted">{{partiesform.telephone.label}}</label>
+                                <input type="{{partiesform.telephone.widget_type}}" class="form-control {{ partiesform.telephone.html_name }}" maxlength="{{partiesform.telephone.field.max_length}}" name="{{ partiesform.telephone.html_name }}" id="alloptions" placeholder="Enter {{ partiesform.telephone.label }}" required ="{{partiesform.telephone.required_css_class }}" {% if partiesform.telephone.value is not None %} value="{{ partiesform.telephone.value }}" {% endif %}>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="m-t-20">
+                                <label class="text-muted">{{partiesform.address.label}}</label>
+                                <input type="{{partiesform.address.widget_type}}" class="form-control {{ partiesform.address.html_name }}" maxlength="{{partiesform.address.field.max_length}}" name="{{ partiesform.address.html_name }}" id="alloptions" placeholder="Enter {{ partiesform.address.label }}" required ="{{partiesform.addressrequired_css_class }}" {% if partiesform.address.value is not None %} value="{{ partiesform.address.value }}" {% endif %}>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="m-t-20">
+                                <div class="form-group">
+                                    <label class="text-muted">{{partiesform.party_type.label}}</label>
+                                    <select class="form-control select2 {{ partiesform.party_type.html_name }}" name="{{ partiesform.party_type.html_name }}">
+                                        {% for key  in partiesform.party_type %}
+                                        {{key}}
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary waves-effect waves-light" id="savecustomer">Save Customer</button>
+                    <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Close</button>
+                </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+{% endblock %}
+
+{% block content3 %}
+<div class="modal fade bs-price-modal-center" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title mt-0">Create Price List</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="m-t-20">
+                                <label class="text-muted">{{formprice.price_name.label}}</label>
+                                <input type="{{formprice.price_name.widget_type}}" class="form-control" maxlength="{{formprice.price_name.field.max_length}}" name="{{ formprice.price_name.html_name }}" id="alloptions" placeholder="Enter {{ formprice.price_name.label }}" required ="{{formprice.price_name.required_css_class }}" {% if formprice.price_name.value is not None %} value="{{ formprice.price_name.value }}" {% endif %}>
+                            </div>
+                        </div>
+                    </div>
+                    <!------ End Row ------->
+
+                    <!------ Start Row ------->
+                    <div class="row">
+                        <!-- Start col -->
+                        <div class="col-12">
+                            <div class="card m-b-20">
+                                <div class="card-body">
+                                    <!-- Start card-body -->
+                                    <h4 class="mt-0 header-title">Price Lines</h4>
+                                    <p class="text-muted m-b-30"></p>
+    
+                                    <div class="table-responsive">
+                                        <table class="table table-striped mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 50%;">Product</th>
+                                                    <th>Value</th>
+                                                    <th>
+                                                        <span class="input-group-btn input-group-append">
+                                                        <button class="btn btn-success btn-sm waves-effect waves-light bootstrap-touchspin-up" type="button" id="add-row">
+                                                            <i class="mdi mdi-plus"></i>
+                                                        </button>
+                                                        <button class="btn btn-danger btn-sm waves-effect waves-light bootstrap-touchspin-up" type="button" id="delete-row">
+                                                            <i class="mdi mdi-close"></i>
+                                                        </button>
+                                                        </span>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <a href="#" id="inline-sel2" data-type="select" data-pk="1" data-value="" data-title="Select sex">Select Product</a>
+                                                    </td>
+                                                    <td>
+                                                        <a href="#" id="inline-username" data-type="text" data-pk="1" data-title="Enter Price">Value</a>
+                                                    </td>
+                                                    <td>
+                                                    </td>                                                
+                                                </tr>    
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- end card-body -->
+                                </div>
+                            </div>
+                        </div> 
+                        <!-- end col -->
+                    </div> 
+                    <!-- end row -->  
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary waves-effect waves-light">Save Price List</button>
+                    <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Close</button>
+                </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+{% endblock %}
+
+
+{% block content4 %}
+<div class="modal fade bs-room-modal-center" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mt-0">Create New Room</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <form id="upload-room-data" enctype="multipart/form-data">
+                {% csrf_token %}
+            <div class="modal-body1">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="m-t-20">
+                            <label class="text-muted">{{formrooms.room_number.label}}</label>
+                            <input type="{{formrooms.room_number.widget_type}}" class="form-control {{ formrooms.room_number.html_name }}" maxlength="{{formrooms.room_number.field.max_length}}" name="{{ formrooms.room_number.html_name }}" id="alloptions" placeholder="Enter {{ formrooms.room_number.label }}" required ="{{formrooms.room_number.required_css_class }}" {% if formrooms.room_number.value is not None %} value="{{ formrooms.room_number.value }}" {% endif %}>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="m-t-20">
+                            <label class="text-muted">{{formrooms.room_name.label}}</label>
+                            <input type="{{formrooms.room_name.widget_type}}" class="form-control {{ formrooms.room_name.html_name }}" maxlength="{{formrooms.room_name.field.max_length}}" name="{{ formrooms.room_name.html_name }}" id="alloptions" placeholder="Enter {{ formrooms.room_name.label }}" required ="{{formrooms.room_name.required_css_class }}" {% if formrooms.room_number.value is not None %} value="{{ formrooms.room_name.value }}" {% endif %}>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="m-t-20">
+                            <label class="text-muted">{{formrooms.room_size.label}}</label>
+                            <input type="{{formrooms.room_size.widget_type}}" class="form-control {{ formrooms.room_size.html_name }}" maxlength="{{formrooms.room_size.field.max_length}}" name="{{ formrooms.room_size.html_name }}" id="alloptions" placeholder="Enter {{ formrooms.room_size.label }}" required ="{{formrooms.room_size.required_css_class }}" {% if formrooms.room_size.value is not None %} value="{{ formrooms.room_size.value }}" {% endif %}>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="m-t-20">
+                            <div class="form-group">
+                                <label>{{formrooms.room_image.label}}</label>
+                                <input type="file" class="filestyle {{ formrooms.room_image.html_name }}" data-buttonname="btn-secondary" name="{{ formrooms.room_image.html_name }}" placeholder="Enter {{ formrooms.room_image.label }}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary waves-effect waves-light" id="saveroom">Save Room</button>
+                <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Close</button>
+            </div>
+        </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+{% endblock %}
+
 {% block js %}
     <!-- Plugins js -->    
     <script src="{% static 'plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js' %}"></script>
@@ -257,5 +449,63 @@
 
         }); 
 
+        $('#savecustomer').on('click', function(){
+				
+				//console.log('omar');
+
+					$.ajax({
+						url: "{% url 'Sales:createcustomerfromorder' %}",
+						type:'post',
+						datatype: "json",
+						data:{
+							party_number: $('.{{ partiesform.party_number.html_name }}').val(),
+                            party_name: $('.{{ partiesform.party_name.html_name }}').val(),
+                            telephone: $('.{{ partiesform.telephone.html_name }}').val(),
+                            address: $('.{{ partiesform.address.html_name }}').val(),
+                            party_type: $('.{{ partiesform.party_type.html_name }}').val(),
+                            csrfmiddlewaretoken: '{{ csrf_token }}',
+						},
+						success: function(data) {
+							$('.bs-party-modal-center').modal('toggle');
+                            dataid = data.substring(0,data.indexOf(':'));
+                            dataname  = data.substring(data.indexOf(':')+1);
+                            // console.log(dataname);
+                            // console.log(dataid);
+                            var option = new Option(dataname, dataid, true, true);
+                            $(".ajax{{ formorder.party.html_name }}").append(option).trigger('change');
+						}
+					
+					});
+				
+			});
+ 
+            $('#upload-room-data').on('submit',function(e){
+                    e.preventDefault();
+                    var formData = new FormData(this);	
+				    // console.log(formData);
+
+					$.ajax({
+						url: "{% url 'Sales:createroomfromorder' %}",
+						type:'POST',
+						data:formData,
+						success: function(data) {
+							$('.bs-room-modal-center').modal('toggle');
+                            dataid = data.substring(0,data.indexOf(':'));
+                            dataname  = data.substring(data.indexOf(':')+1);
+                            // console.log(dataname);
+                            // console.log(dataid);
+                            var option = new Option(dataname, dataid, true, true);
+                            $(".ajax{{ formorder.room.html_name }}").append(option).trigger('change');
+						},
+                        error: function (data) {
+                        },
+                        cache: false,
+                        contentType: false,
+                        processData: false
+                        
+					
+					});
+				
+			});
     </script>
 {% endblock %}

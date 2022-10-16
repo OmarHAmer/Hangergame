@@ -1,8 +1,11 @@
+from django.http import HttpResponse
 from django.urls import reverse
 from django.shortcuts import render,redirect
 from accounts.srp import NavClass
 from .forms import FormPriceListHeaders,FormPriceListLines,FormRooms,FormOrderHeaders,FormOrderLines,FormInvoiceHeaders,FormInvoiceLines
 from .models import Rooms,PriceListLines,OrderLines
+from Party.forms import PartiesForm
+from Party.models import Parties
 from django.contrib.auth.models import User
 # Create your views here.
 
@@ -115,7 +118,7 @@ def createorder(request):
     if request.method == 'POST':
     
         formorder = FormOrderHeaders(request.POST)
-
+        
         if formorder.is_valid():
 
             formorder.cleaned_data
@@ -137,9 +140,16 @@ def createorder(request):
     else:
 
         formorder = FormOrderHeaders({})
+        formprice = FormPriceListHeaders({})
+        formrooms = FormRooms({})
+        partiesform = PartiesForm({})
+
         context = {
                 **navbar,
                 'formorder':formorder,
+                'formprice':formprice,
+                'formrooms':formrooms,
+                'partiesform':partiesform,
             }
         return render(request,'Sales/create-order.html',context)
 
@@ -155,3 +165,55 @@ def displayorder(request):
     }
 
     return render(request,'Sales/order-data.html',context)
+
+
+def createpartyfromorder(request):
+
+    if request.method == 'POST':
+
+        party_number = request.POST['party_number']
+        party_name = request.POST['party_name']
+        telephone = request.POST['telephone']
+        address = request.POST['address']
+        party_type = request.POST['party_type']
+
+        partinsert = Parties.objects.create(party_number = party_number, \
+                party_name= party_name, \
+                telephone= telephone, \
+                address= address, \
+                party_type= party_type, \
+                created_by= request.user.id, \
+                Last_update_by= request.user.id)
+
+        context= str(partinsert.id) + ":" + partinsert.party_name
+
+        return HttpResponse(context)
+
+    else:
+
+        return HttpResponse("Customer Not Created !")
+
+
+def createroomfromorder(request):
+
+    if request.method == 'POST':
+
+        room_number = request.POST['room_number']
+        room_name = request.POST['room_name']
+        room_size = request.POST['room_size']
+        room_image = request.FILES['room_image']
+
+        roominsert = Rooms.objects.create(room_number = room_number, \
+                room_name= room_name, \
+                room_size= room_size, \
+                room_image= room_image, \
+                created_by= request.user.id, \
+                Last_update_by= request.user.id)
+
+        context= str(roominsert.id) + ":" + roominsert.room_name
+
+        return HttpResponse(context)
+
+    else:
+
+        return HttpResponse("Customer Not Created !")

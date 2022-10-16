@@ -11,4 +11,6 @@ urlpatterns = [
     path('price-list-data',views.displaypricelist,name='displaypricelist'),
     path('create-order',views.createorder,name='createorder'),
     path('order-data',views.displayorder,name='displayorder'),
+    path('create-customer',views.createpartyfromorder,name='createcustomerfromorder'),
+    path('create-room-order',views.createroomfromorder,name='createroomfromorder'),
 ]
