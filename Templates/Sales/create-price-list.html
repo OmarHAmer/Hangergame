@@ -54,6 +54,7 @@
                                         <table class="table table-striped mb-0" id="editableTable">
                                             <thead>
                                                 <tr>
+                                                    <th>Category</th>
                                                     <th style="width: 50%;">Product</th>
                                                     <th>Value</th>
                                                     <th>
@@ -61,30 +62,38 @@
                                                         <button class="btn btn-success btn-sm waves-effect waves-light bootstrap-touchspin-up" type="button" id="add-row" >
                                                             <i class="mdi mdi-plus"></i>
                                                         </button>
-                                                        <button class="btn btn-danger btn-sm waves-effect waves-light bootstrap-touchspin-up" type="button" id="delete-row">
+                                                        <!-- <button class="btn btn-danger btn-sm waves-effect waves-light bootstrap-touchspin-up" type="button" id="delete-row">
                                                             <i class="mdi mdi-close"></i>
-                                                        </button>
+                                                        </button> -->
                                                         </span>
                                                     </th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr id="1">
-                                                    <td id="product" class="valid">
+                                                <tr id="tr1">
+                                                    <td id="product" class="NotNull">
+                                                        <a href="#" id="inline-sex" data-type="select" data-pk="1" data-value="" data-title="Select sex">Select Category</a>
+                                                    </td>
+                                                    <td id="product" class="NotNull">
                                                         <a href="#" id="inline-sel2" data-type="select" data-pk="1" data-value="" data-title="Select sex">Select Product</a>
                                                     </td>
-                                                    <td id="value" class="Notvalid">
+                                                    <td id="value" class="NotNull">
                                                         <a href="#" id="inline-username" data-type="text" data-pk="1" data-title="Enter Price">Value</a>
                                                     </td>
                                                     <td>
-                                                        <div class="form-group">
+                                                        <span class="input-group-btn input-group-append">
+                                                            <button class="btn btn-danger btn-sm waves-effect waves-light bootstrap-touchspin-up" type="button" onclick="deleterow(1)">
+                                                                <i class="mdi mdi-close"></i>
+                                                            </button>
+                                                        </span>
+                                                        <!-- <div class="form-group">
                                                             <label class="text-muted">{{partiesform.party_type.label}}</label>
                                                             <select class="form-control select2 {{ partiesform.party_type.html_name }}" name="{{ partiesform.party_type.html_name }}">
                                                                 {% for key  in partiesform.party_type %}
                                                                 {{key}}
                                                                 {% endfor %}
                                                             </select>
-                                                        </div>
+                                                        </div> -->
                                                     </td>                                                
                                                 </tr>    
                                             </tbody>
@@ -132,91 +141,109 @@ $('#add-row').on('click',function(){
 });
 
 
-function  addValidation(tableid,tdvalaccordto,classvalidvalue) {
+function  addValidation(tableid,tdvalaccordto) {
         var flag = "notFound";
         var errorMessage = "";
-        var idarr = [];
+        var count = $('#'+ tableid +' tbody tr').length;
+
         $('#'+ tableid +' tbody tr').each(function () {
-            idarr.push(this.id); //get id of row and push value in arry
-            $('#'+ tableid +' tbody tr td').each(function () {
-                console.log(this.id); 
-                console.log($('#'+this.id).attr('class'));
-                console.log($('#'+this.id+' '+tdvalaccordto).html());
-                var id = this.id;
-                var classname = $('#'+this.id).attr('class') ; 
-                var value = $('#'+this.id+' '+tdvalaccordto).html();
 
-                if (classname == classvalidvalue){
-                        if (value !== "undefined" && value === ""){
-                            errorMessage = "Must be "  
-                        }
+            // console.log(this.id);
+            // console.log($('#'+this.id+' td').attr('class'));
+            // console.log($('#'+this.id+' td '+tdvalaccordto).html());
+            var id = this.id;
+            var classname = $('#'+this.id+' td').attr('class');
+            var value = $('#'+this.id+' td '+tdvalaccordto).html();
+            
+
+            if (classname == 'NotNull' ){
+                    if (value === "undefined" && value === ""){
+                        errorMessage = "Must be Entered"  ;
+                        flag = "found";
+                    }
                 }
 
-            });
 
-            console.log(idarr);
-            console.log($(this).closest("tr"));
-            var itemId = $(this).closest("tr").find(".selectItemId").val();
-            var qty = $(this).closest("tr").find(".qtyRequired").val();
-            var Bounceqty = $(this).closest("tr").find(".bonusQty").val();
-            var duedate = $(this).closest("tr").find(".dueDate").val();
-            if (typeof itemId !== "undefined" && itemId === "") {
-                errorMessage = "Please Select Item from item list.";
-                flag = "found";
-            } else if (parseInt(qty) === 0 || qty === "" || Bounceqty === "") {
-                errorMessage = "Please enter valid Quantity.";
-                flag = "found";
-            } else if (duedate === "") {
-                errorMessage = "Please enter valid Duedate.";
-                flag = "found";
-            }
         });
-        var index = 0;
-        var oldItem = [];
-        $('#editableTable tbody tr').each(function () {
-            var newItem = $(this).closest("tr").find(".selectItemId").val();
-            for (var i = 0; i < oldItem.length; i++) {
-                if (newItem === oldItem[i]) {
-                    errorMessage = "This product has been already added.";
-                    flag = "found";
-                }
-            }
-            oldItem[index] = newItem;
-            index++;
-        });
+
         if (flag === "found") {
-            $('#error-title').html("Error");
-            $('#error-body').html(errorMessage);
-            $('#errrorModal').modal('show');
+            // $('#error-title').html("Error");
+            // $('#error-body').html(errorMessage);
+            // $('#errrorModal').modal('show');
+            alert(errorMessage);
         } else {
-            addMore();
+            addMore(count);
         }
     }
 
-    function addMore() {
-				$('select').select2('destroy');
-                var table = document.getElementById("editableTable");
-                var row = table.insertRow(-1);
-                var cell1 = row.insertCell(-1);
-                var cell2 = row.insertCell(-1);
-                var cell3 = row.insertCell(-1);
-                var cell4 = row.insertCell(-1);
-                var cell5 = row.insertCell(-1);
-                var cell6 = row.insertCell(-1);
-                var cell7 = row.insertCell(-1);
-                var x = document.getElementById("editableTable").rows[1].cells;
-                cell1.innerHTML = x[0].innerHTML;
-				//declareSelect2();
-                cell2.innerHTML = x[1].innerHTML;
-                cell3.innerHTML = x[2].innerHTML;
-                cell4.innerHTML = x[3].innerHTML;
-                cell5.innerHTML = x[4].innerHTML;
-                cell6.innerHTML = x[5].innerHTML;
-                cell7.innerHTML = x[6].innerHTML;
-				declareSelect2();
+function addMore(rowno) {
+
+            //$("#add-row").click(function () {
+                rowno++;
+                add_row = "<tr id='tr"+ rowno +"'>";
+
+
+                add_row += '<td class="NotNull"> \
+                            <a href="#" id="inline-sex" data-type="select" data-pk="1" data-value="" data-title="Select sex">Select Category</a> \
+                            </td>';
+                add_row += '<td> \
+                            <a href="#" id="inline-sel2" data-type="select" data-pk="1" data-value="" data-title="Select sex">Select Product</a> \
+                            </td>';
+                add_row += '<td> \
+                            <a href="#" id="inline-username" data-type="text" data-pk="1" data-title="Enter Price">Value</a> \
+                            </td>';
+                add_row += '<td> \
+                                <span class="input-group-btn input-group-append"> \
+                                    <button class="btn btn-danger btn-sm waves-effect waves-light bootstrap-touchspin-up" type="button" onclick="deleterow('+rowno+')"> \
+                                        <i class="mdi mdi-close"></i> \
+                                    </button> \
+                                </span> \
+                            </td>';
+                add_row += "</tr>";
+
+                tableBody = $("table tbody");
+                tableBody.append(add_row);
+                
+            //});
+				// declareSelect2();
             } 
-			
-        $('#editableTable').on('change', '.selectItemId', function () {
+
+function deleterow(rownum){ 
+
+    removeRow('editableTable','a',rownum);
+
+};
+
+function removeRow(tableid,tdvalaccordto,rownum){
+    
+    var count = rownum //$('#'+ tableid +' tbody tr').length;
+    //console.log(count);
+    if (count === 1) {
+
+        $('#'+ tableid +' tbody tr').each(function () {
+            //console.log($('#'+this.id+' td '+tdvalaccordto));
+
+            //var classname = $('#'+this.id+' td').attr('class');
+            var classname = $('#tr'+count+' td').attr('class');
+
+            if (classname == 'NotNull' ){
+                $('#tr'+count+' td '+tdvalaccordto).html('Must be Select');
+                //$('#'+this.id+' td '+tdvalaccordto).html('Must be Select');
+            }else{
+                $('#tr'+count+' td '+tdvalaccordto).html('Not Selected');
+                //$('#'+this.id+' td '+tdvalaccordto).html('Not Selected');
+            };
+
+        });
+
+    } else {
+
+        $('#tr'+count).remove();
+
+    };
+
+};
+     /*   $('#editableTable').on('change', '.selectItemId', function () {
 	
                 var unitPrice = $(this).closest('tr').find('.unitPrice');
                 var FMS  = $(this).closest('tr').find('.FMS');
@@ -282,8 +309,8 @@ function  addValidation(tableid,tdvalaccordto,classvalidvalue) {
             }
     
          });
-
-        $(document).ready(function () {
+*/
+       /* $(document).ready(function () {
             var lineNo = 1;
             $("#add-row").click(function () {
                 
@@ -310,7 +337,7 @@ function  addValidation(tableid,tdvalaccordto,classvalidvalue) {
                 
             });
 
-        }); 
+        }); */
 
         $('#inline-sel2').editable({
         prepend: "not selected",
