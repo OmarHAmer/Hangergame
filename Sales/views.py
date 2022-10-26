@@ -6,6 +6,7 @@ from .forms import FormPriceListHeaders,FormPriceListLines,FormRooms,FormOrderHe
 from .models import Rooms,PriceListLines,OrderLines
 from Party.forms import PartiesForm
 from Party.models import Parties
+from Inventory.models import Category
 from django.contrib.auth.models import User
 # Create your views here.
 
@@ -65,10 +66,12 @@ def displayrooms(request):
 def createprice(request):
 
     navbar  = NavClass.mainbar()
-
+    categorydata = Category.objects.all()
+    
     if request.method == 'POST':
     
         formprice = FormPriceListHeaders(request.POST)
+        
 
         if formprice.is_valid():
 
@@ -84,6 +87,7 @@ def createprice(request):
             context = {
                 **navbar,
                 'formprice':formprice,
+                'categorydata':categorydata,
             }
         
         return render(request,'Sales/create-price-list.html',context)
@@ -94,6 +98,7 @@ def createprice(request):
         context = {
                 **navbar,
                 'formprice':formprice,
+                'categorydata':categorydata,
             }
         return render(request,'Sales/create-price-list.html',context)
 

@@ -71,10 +71,11 @@
                                             </thead>
                                             <tbody>
                                                 <tr id="tr1">
-                                                    <td id="product" class="NotNull">
-                                                        <a href="#" id="inline-sex" data-type="select" data-pk="1" data-value="" data-title="Select sex">Select Category</a>
+                                                    <td  class="NotNull">
+                                                        <a href="#" id = "Category">Select Category</a>
+
                                                     </td>
-                                                    <td id="product" class="NotNull">
+                                                    <td id = "Items" class="NotNull">
                                                         <a href="#" id="inline-sel2" data-type="select" data-pk="1" data-value="" data-title="Select sex">Select Product</a>
                                                     </td>
                                                     <td id="value" class="NotNull">
@@ -183,10 +184,10 @@ function addMore(rowno) {
                 add_row = "<tr id='tr"+ rowno +"'>";
 
 
-                add_row += '<td class="NotNull"> \
+                add_row += '<td class="NotNull" id = "Category"> \
                             <a href="#" id="inline-sex" data-type="select" data-pk="1" data-value="" data-title="Select sex">Select Category</a> \
                             </td>';
-                add_row += '<td> \
+                add_row += '<td id = "Items"> \
                             <a href="#" id="inline-sel2" data-type="select" data-pk="1" data-value="" data-title="Select sex">Select Product</a> \
                             </td>';
                 add_row += '<td> \
@@ -208,138 +209,85 @@ function addMore(rowno) {
 				// declareSelect2();
             } 
 
-function deleterow(rownum){ 
+    function deleterow(rownum){ 
 
-    removeRow('editableTable','a',rownum);
-
-};
-
-function removeRow(tableid,tdvalaccordto,rownum){
-    
-    var count = rownum //$('#'+ tableid +' tbody tr').length;
-    //console.log(count);
-    if (count === 1) {
-
-        $('#'+ tableid +' tbody tr').each(function () {
-            //console.log($('#'+this.id+' td '+tdvalaccordto));
-
-            //var classname = $('#'+this.id+' td').attr('class');
-            var classname = $('#tr'+count+' td').attr('class');
-
-            if (classname == 'NotNull' ){
-                $('#tr'+count+' td '+tdvalaccordto).html('Must be Select');
-                //$('#'+this.id+' td '+tdvalaccordto).html('Must be Select');
-            }else{
-                $('#tr'+count+' td '+tdvalaccordto).html('Not Selected');
-                //$('#'+this.id+' td '+tdvalaccordto).html('Not Selected');
-            };
-
-        });
-
-    } else {
-
-        $('#tr'+count).remove();
+        removeRow('editableTable','a',rownum);
 
     };
 
-};
-     /*   $('#editableTable').on('change', '.selectItemId', function () {
-	
-                var unitPrice = $(this).closest('tr').find('.unitPrice');
-                var FMS  = $(this).closest('tr').find('.FMS');
-                var itemCode = $(this).closest('tr').find('.selectItemId').val().substring(0,$(this).closest('tr').find('.selectItemId').val().indexOf(':'));
-                var OrganizationId = $(this).closest('tr').find('.selectItemId').val().substring($(this).closest('tr').find('.selectItemId').val().lastIndexOf(':')+1);
-                //console.log(OrganizationId);
-                var customeCode = document.getElementById('customeCode').value;
-                //console.log(customeCode);
-                var values = {
-                    'itemCode': itemCode,
-                    'customeCode': customeCode,
-                    'OrganizationId': OrganizationId
+    function removeRow(tableid,tdvalaccordto,rownum){
+        
+        var count = rownum //$('#'+ tableid +' tbody tr').length;
+        //console.log(count);
+        if (count === 1) {
+
+            $('#'+ tableid +' tbody tr').each(function () {
+                //console.log($('#'+this.id+' td '+tdvalaccordto));
+
+                //var classname = $('#'+this.id+' td').attr('class');
+                var classname = $('#tr'+count+' td').attr('class');
+
+                if (classname == 'NotNull' ){
+                    $('#tr'+count+' td '+tdvalaccordto).html('Must be Select');
+                    //$('#'+this.id+' td '+tdvalaccordto).html('Must be Select');
+                }else{
+                    $('#tr'+count+' td '+tdvalaccordto).html('Not Selected');
+                    //$('#'+this.id+' td '+tdvalaccordto).html('Not Selected');
                 };
-                $.ajax({
-                    type: "POST",
-                    data: values,
-                    url: 'editableTableEvent.php',
-                    success: function (data) {
-                        unitPrice.val(data);
-                    }
-                });
-                $.ajax({
-                    type: "POST",
-                    data: values,
-                    url: 'ProcessBonus.php',
-                    success: function (data) {
-                        FMS.val(data);
-                    }
-                });
+
             });
 
-        $('#editableTable').on('input', '.qtyRequired', function () {
-                var reqQty = $(this).closest('tr').find('.qtyRequired');
-                var unitPrice = $(this).closest('tr').find('.unitPrice');
-                var amount = $(this).closest('tr').find('.amount');
-                amount.val(reqQty.val() * unitPrice.val());
-                        
-                var FMS = $(this).closest('tr').find('.FMS');
-                var bonusQty = $(this).closest('tr').find('.bonusQty');
-                bonusQty.val(reqQty.val() * FMS.val());
-            });
+        } else {
 
-        $("#editableTable").on('click', '.delete', function (e) {
-            var table = document.getElementById("editableTable");
-            var addButton = $(this).closest('tr').find('.addItem');
-            var deleteButton = $(this).closest('tr').find('.delete');
-            var row = $(this).closest("tr");
-            var table_len = (table.rows.length) - 1;
+            $('#tr'+count).remove();
 
-            if (table_len === 1) {
-                row.find(".selectItemId").val("");
-                row.find(".itemDesription").val("");
-                row.find(".avilableQty").val("");
-                row.find(".qtyRequired").val("");
-                row.find(".unitPrice").val("");
-                row.find(".amount").val("");
-                row.find(".bonusQty").val("");
+        };
 
-            } else {
+    };
 
-                row.remove();
+    $('#Category').on('click',function(){
+        console.log(this.id);
+        this.id = 'Open';
+        $('#Open').html('<div class="form-group"> \
+                                <select class="form-control select2" name="category">\
+                                    {% for key  in categorydata %} \
+                                        <option>{{key}}</option>\
+                                    {% endfor %}\
+                                </select>\
+                            </div>');
+        // $('.'+ classData).show();
+		// $('.'+ tddata).hide();
+        declareSelect2;
+        // $.ajax({
+        //                 type: "POST",
+        //                 data: values,
+        //                 url: 'editableTableEvent.php',
+        //                 success: function (data) {
+        //                     unitPrice.val(data);
+        //                 }
+        //             });
+    });
 
-            }
-    
-         });
-*/
-       /* $(document).ready(function () {
-            var lineNo = 1;
-            $("#add-row").click(function () {
-                
-                add_row = "<tr id='tr"+ lineNo +"'>";
-                add_row += '<td> \
-                            <a href="#" id="inline-sel2" data-type="select" data-pk="1" data-value="" data-title="Select sex">Select Product</a> \
-                            </td>';
+    function declareSelect2(){
+		var selectObj = $('select');
+		
+		$.map(selectObj, function(text, val){
 
-                add_row += '<td> \
-                            <a href="#" id="inline-username" data-type="text" data-pk="1" data-title="Enter Price">Value</a> \
-                            </td>';
-                add_row += '<td></td>';
-                add_row += "</tr>";
+			var selectPlaceholder = $(text).attr('placeholder');
+			if(selectPlaceholder)
+			{
+				$(text).select2({
+					placeholder : selectPlaceholder
+				});
+			}
+			else
+			{
+				$(text).select2();
+			}
+		});
+	}
 
-                tableBody = $("table tbody");
-                tableBody.append(add_row);
-                lineNo++;
-            });
-
-            // Find and remove selected table rows
-            $("#delete-row").click(function(){
-                lineNo--;
-                $('#tr'+lineNo).remove();
-                
-            });
-
-        }); */
-
-        $('#inline-sel2').editable({
+    $('#inline-sel2').editable({
         prepend: "not selected",
         mode: 'inline',
         inputclass: 'form-control select2',
