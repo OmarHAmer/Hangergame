@@ -71,9 +71,8 @@
                                             </thead>
                                             <tbody>
                                                 <tr id="tr1">
-                                                    <td  class="NotNull">
-                                                        <a href="#" id = "Category">Select Category</a>
-
+                                                    <td  class="NotNull" id = "Category">
+                                                        <a href="#" >Select Category</a>
                                                     </td>
                                                     <td id = "Items" class="NotNull">
                                                         <a href="#" id="inline-sel2" data-type="select" data-pk="1" data-value="" data-title="Select sex">Select Product</a>
@@ -247,17 +246,22 @@ function addMore(rowno) {
 
     $('#Category').on('click',function(){
         console.log(this.id);
-        this.id = 'Open';
-        $('#Open').html('<div class="form-group"> \
+        //this.id = 'Open';
+        $('#Category').html('<div class="form-group"> \
                                 <select class="form-control select2" name="category">\
+                                    <option></option> \
                                     {% for key  in categorydata %} \
                                         <option>{{key}}</option>\
                                     {% endfor %}\
                                 </select>\
                             </div>');
+        
         // $('.'+ classData).show();
 		// $('.'+ tddata).hide();
-        declareSelect2;
+        if (this.id == 'Category'){
+            declareSelect2();
+        }
+        this.id = 'Open';
         // $.ajax({
         //                 type: "POST",
         //                 data: values,
@@ -268,7 +272,36 @@ function addMore(rowno) {
         //             });
     });
 
-    function declareSelect2(){
+
+
+        $('#inline-sel2').editable({
+            prepend: "not selected",
+            mode: 'inline',
+            inputclass: 'form-control select2',
+            source: [
+                {value: 1, text: 'Male'},
+                {value: 2, text: 'Female'}
+            ],
+            validate: function (value) {
+                if ($.trim(value) == '') return 'This field is required';
+                declareSelect2();
+            },
+            display: function (value, sourceData) {
+                var colors = {"": "#98a6ad", 1: "#5fbeaa", 2: "#5d9cec"},
+                    elem = $.grep(sourceData, function (o) {
+                        return o.value == value;
+                    });
+
+                if (elem.length) {
+                    $(this).text(elem[0].text).css("color", colors[value]);
+                } else {
+                    $(this).empty();
+                }
+                declareSelect2();
+            }
+        });
+        
+        function declareSelect2(){
 		var selectObj = $('select');
 		
 		$.map(selectObj, function(text, val){
@@ -287,30 +320,6 @@ function addMore(rowno) {
 		});
 	}
 
-    $('#inline-sel2').editable({
-        prepend: "not selected",
-        mode: 'inline',
-        inputclass: 'form-control select2',
-        source: [
-            {value: 1, text: 'Male'},
-            {value: 2, text: 'Female'}
-        ],
-        validate: function (value) {
-            if ($.trim(value) == '') return 'This field is required';
-        },
-        display: function (value, sourceData) {
-            var colors = {"": "#98a6ad", 1: "#5fbeaa", 2: "#5d9cec"},
-                elem = $.grep(sourceData, function (o) {
-                    return o.value == value;
-                });
-
-            if (elem.length) {
-                $(this).text(elem[0].text).css("color", colors[value]);
-            } else {
-                $(this).empty();
-            }
-        }
-    });
     </script>
 
 {% endblock %}
